@@ -74,14 +74,14 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="bg-white border-b border-gray-100 px-4 py-4">
+    <div className="min-h-screen pb-20">
+      <div className="glass border-b border-white/5 px-4 py-4 sticky top-0 z-10">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div>
-            <Link to="/" className="text-sm text-gray-500 hover:text-gray-700">
+            <Link to="/" className="text-sm text-gray-400 hover:text-white transition-colors">
               ← Back
             </Link>
-            <h1 className="text-xl font-bold text-gray-900 mt-1">Chapters</h1>
+            <h1 className="text-xl font-bold text-white text-glow mt-1">Chapters</h1>
           </div>
           <Button onClick={() => handleOpenModal()}>New Chapter</Button>
         </div>
@@ -90,7 +90,7 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-8">
         {activeChapters.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Active</h2>
+            <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Active</h2>
             <div className="space-y-3">
               {activeChapters.map(chapter => (
                 <ChapterCard
@@ -108,7 +108,7 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
 
         {pausedChapters.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Paused</h2>
+            <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paused</h2>
             <div className="space-y-3">
               {pausedChapters.map(chapter => (
                 <ChapterCard
@@ -126,7 +126,7 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
 
         {completedChapters.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Completed</h2>
+            <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Completed</h2>
             <div className="space-y-3">
               {completedChapters.map(chapter => (
                 <ChapterCard
@@ -144,18 +144,18 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
 
         {chapters.length === 0 && (
           <Card className="text-center py-8">
-            <p className="text-gray-500">No chapters yet. Create your first chapter to get started.</p>
+            <p className="text-gray-400">No chapters yet. Create your first chapter to get started.</p>
           </Card>
         )}
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-md">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <Card className="w-full max-w-md border-white/10 shadow-2xl">
+            <h2 className="text-xl font-bold text-white mb-6 text-glow">
               {editingChapter ? 'Edit Chapter' : 'New Chapter'}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <Input
                 label="Chapter Name"
                 value={formData.chapter_name}
@@ -173,17 +173,17 @@ export function Chapters({ chapters, onAdd, onUpdate, onDelete, onStatusChange, 
                 required
               />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Focus</label>
+                <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Focus</label>
                 <div className="flex gap-2">
                   {focusOptions.map(option => (
                     <button
                       key={option.value}
                       type="button"
                       onClick={() => setFormData(prev => ({ ...prev, focus: option.value }))}
-                      className={`flex-1 py-2 rounded-lg border-2 transition-colors font-medium text-sm ${
+                      className={`flex-1 py-2 rounded-lg border transition-all duration-200 font-medium text-sm ${
                         formData.focus === option.value
-                          ? 'border-primary-500 bg-primary-50 text-primary-700'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-primary-500 bg-primary-500/10 text-primary-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]'
+                          : 'border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:border-white/20'
                       }`}
                     >
                       {option.label}

@@ -56,13 +56,13 @@ export function Profile({ profile, onSave, onPreloadChapters, isNewUser }: Profi
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen py-8 px-4">
       <div className="max-w-lg mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold text-white text-glow mb-2">
             {isNewUser ? 'Set Up Your Profile' : 'Edit Profile'}
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400">
             {isNewUser
               ? 'Tell us about yourself to personalize your experience.'
               : 'Update your profile information.'}
@@ -104,20 +104,20 @@ export function Profile({ profile, onSave, onPreloadChapters, isNewUser }: Profi
             />
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Injury Notes <span className="text-gray-400">(optional)</span>
+              <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1.5">
+                Injury Notes <span className="text-gray-500 normal-case tracking-normal">(optional)</span>
               </label>
               <textarea
                 value={formData.injury_notes}
                 onChange={(e) => setFormData(prev => ({ ...prev, injury_notes: e.target.value }))}
                 placeholder="Any injuries or physical limitations..."
                 rows={2}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                className="w-full px-3 py-2 bg-dark-900/50 border border-white/10 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1.5">
                 Long-term Goal
               </label>
               <textarea
@@ -125,7 +125,7 @@ export function Profile({ profile, onSave, onPreloadChapters, isNewUser }: Profi
                 onChange={(e) => setFormData(prev => ({ ...prev, long_term_goal: e.target.value }))}
                 placeholder="What do you want to achieve in the next 12+ months?"
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                className="w-full px-3 py-2 bg-dark-900/50 border border-white/10 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 resize-none"
                 required
               />
             </div>

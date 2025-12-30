@@ -27,6 +27,7 @@ function AppContent() {
     checkIns,
     addCheckIn,
     getTodayCheckIn,
+    getLastCheckIn,
     hasCheckedInToday,
     getRecentCheckIns,
   } = useCheckIns(user?.id)
@@ -34,10 +35,10 @@ function AppContent() {
   // Loading state
   if (authLoading || (user && profileLoading)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-dark-950">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="mt-4 text-gray-500">Loading...</p>
+          <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="mt-4 text-gray-400">Loading...</p>
         </div>
       </div>
     )
@@ -107,6 +108,7 @@ function AppContent() {
           element={
             <CheckIn
               todayCheckIn={getTodayCheckIn()}
+              lastCheckIn={getLastCheckIn()}
               onSubmit={addCheckIn}
             />
           }

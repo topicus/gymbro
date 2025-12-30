@@ -22,20 +22,20 @@ export function ProgressBar({
   }
 
   const colors = {
-    primary: 'bg-primary-500',
-    blue: 'bg-blue-500',
-    amber: 'bg-amber-500',
+    primary: 'bg-gradient-to-r from-primary-500 to-secondary-500',
+    blue: 'bg-gradient-to-r from-blue-500 to-cyan-400',
+    amber: 'bg-gradient-to-r from-amber-500 to-orange-500',
   }
 
   return (
     <div className="space-y-1">
       {(label || showPercentage) && (
         <div className="flex justify-between text-sm">
-          {label && <span className="text-gray-600">{label}</span>}
+          {label && <span className="text-gray-400">{label}</span>}
           {showPercentage && <span className="text-gray-500">{Math.round(percentage)}%</span>}
         </div>
       )}
-      <div className={`w-full bg-gray-200 rounded-full overflow-hidden ${heights[size]}`}>
+      <div className={`w-full bg-dark-800 rounded-full overflow-hidden ${heights[size]}`}>
         <div
           className={`${colors[color]} ${heights[size]} rounded-full transition-all duration-300 ease-out`}
           style={{ width: `${percentage}%` }}

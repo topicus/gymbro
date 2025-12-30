@@ -108,11 +108,15 @@ export function useCheckIns(userId: string | undefined) {
     return checkIns.slice(0, limit)
   }
 
+  const getLastCheckIn = (): DailyCheckIn | null => {
+    return checkIns[0] || null
+  }
+
   const calculateMissedDays = (): number => {
     if (checkIns.length === 0) return 0
 
     const today = new Date()
-    const lastCheckIn = new Date(checkIns[0].date)
+    const lastCheckIn = new Date(checkIns[0].date + 'T00:00:00')
     const diffTime = today.getTime() - lastCheckIn.getTime()
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
 
@@ -126,6 +130,7 @@ export function useCheckIns(userId: string | undefined) {
     error,
     addCheckIn,
     getTodayCheckIn,
+    getLastCheckIn,
     hasCheckedInToday,
     getRecentCheckIns,
     calculateMissedDays,

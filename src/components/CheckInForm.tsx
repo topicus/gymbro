@@ -45,7 +45,7 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
             Bloating Level
           </label>
           <div className="flex gap-2">
@@ -55,10 +55,10 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, bloating_level: level }))}
                 className={`
-                  flex-1 py-2 rounded-lg border-2 transition-colors font-medium
+                  flex-1 py-2 rounded-lg border transition-all duration-200 font-medium
                   ${formData.bloating_level === level
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary-500 bg-primary-500/10 text-primary-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]'
+                    : 'border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:border-white/20'
                   }
                 `}
               >
@@ -66,14 +66,14 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
               </button>
             ))}
           </div>
-          <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+          <div className="flex justify-between text-[10px] text-gray-500 uppercase tracking-widest mt-1.5 px-1">
             <span>Low</span>
             <span>High</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
             Energy Level
           </label>
           <div className="flex gap-2">
@@ -83,10 +83,10 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, energy: level }))}
                 className={`
-                  flex-1 py-2 rounded-lg border-2 transition-colors font-medium
+                  flex-1 py-2 rounded-lg border transition-all duration-200 font-medium
                   ${formData.energy === level
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary-500 bg-primary-500/10 text-primary-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]'
+                    : 'border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:border-white/20'
                   }
                 `}
               >
@@ -94,14 +94,14 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
               </button>
             ))}
           </div>
-          <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+          <div className="flex justify-between text-[10px] text-gray-500 uppercase tracking-widest mt-1.5 px-1">
             <span>Low</span>
             <span>High</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
             Alcohol Intake
           </label>
           <div className="flex gap-2">
@@ -111,10 +111,10 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, alcohol_intake: option.value }))}
                 className={`
-                  flex-1 py-2 rounded-lg border-2 transition-colors font-medium
+                  flex-1 py-2 rounded-lg border transition-all duration-200 font-medium
                   ${formData.alcohol_intake === option.value
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary-500 bg-primary-500/10 text-primary-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]'
+                    : 'border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:border-white/20'
                   }
                 `}
               >
@@ -125,14 +125,21 @@ export function CheckInForm({ onSubmit, initialData, isLoading }: CheckInFormPro
         </div>
 
         <div>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={formData.movement_done}
-              onChange={(e) => setFormData(prev => ({ ...prev, movement_done: e.target.checked }))}
-              className="w-5 h-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-            />
-            <span className="text-sm font-medium text-gray-700">I moved today</span>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.movement_done}
+                onChange={(e) => setFormData(prev => ({ ...prev, movement_done: e.target.checked }))}
+                className="w-5 h-5 rounded border-white/10 bg-white/5 text-primary-500 focus:ring-primary-500/50 focus:ring-offset-0 transition-all cursor-pointer appearance-none checked:bg-primary-500 checked:border-primary-500"
+              />
+              {formData.movement_done && (
+                <svg className="w-3.5 h-3.5 text-dark-950 absolute left-0.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </div>
+            <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">I moved today</span>
           </label>
         </div>
 

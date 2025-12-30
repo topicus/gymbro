@@ -12,14 +12,14 @@ interface ChapterCardProps {
 
 export function ChapterCard({ chapter, progress, onStatusChange, onEdit, onDelete }: ChapterCardProps) {
   const focusColors = {
-    drainage: 'bg-blue-100 text-blue-700',
-    strength: 'bg-red-100 text-red-700',
-    maintenance: 'bg-green-100 text-green-700',
+    drainage: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+    strength: 'bg-red-500/10 text-red-400 border-red-500/20',
+    maintenance: 'bg-green-500/10 text-green-400 border-green-500/20',
   }
 
   const statusColors = {
-    active: 'bg-green-500',
-    paused: 'bg-yellow-500',
+    active: 'bg-primary-500 shadow-[0_0_10px_rgba(132,204,22,0.5)]',
+    paused: 'bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]',
     completed: 'bg-gray-500',
   }
 
@@ -28,19 +28,19 @@ export function ChapterCard({ chapter, progress, onStatusChange, onEdit, onDelet
     : 0
 
   return (
-    <Card className="relative">
+    <Card className="relative overflow-hidden">
       <div className="flex items-start justify-between mb-3">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-1.5">
             <span className={`w-2 h-2 rounded-full ${statusColors[chapter.status]}`} />
-            <h3 className="font-semibold text-gray-900">{chapter.chapter_name}</h3>
+            <h3 className="font-semibold text-white">{chapter.chapter_name}</h3>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${focusColors[chapter.focus]}`}>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${focusColors[chapter.focus]}`}>
               {chapter.focus}
             </span>
-            <span className="text-sm text-gray-500">
-              {chapter.duration} days
+            <span className="text-xs text-gray-500 font-medium">
+              {chapter.duration} DAYS
             </span>
           </div>
         </div>
@@ -55,7 +55,7 @@ export function ChapterCard({ chapter, progress, onStatusChange, onEdit, onDelet
         </div>
       )}
 
-      <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+      <div className="flex items-center gap-2 pt-3 border-t border-white/5">
         {chapter.status === 'paused' && (
           <Button size="sm" onClick={() => onStatusChange('active')}>
             Activate

@@ -7,7 +7,9 @@
       "Bash(npx tsc:*)",
       "Bash(npm run build:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd password reset and magic link login\n\n- Add resetPassword method using Supabase resetPasswordForEmail\n- Add signInWithMagicLink method using Supabase signInWithOtp\n- Update Auth page with multiple modes \\(sign-in, sign-up, magic-link, forgot-password\\)\n- Add \"Forgot password?\" link and \"Sign in with Magic Link\" button\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd password reset and magic link login\n\n- Add resetPassword method using Supabase resetPasswordForEmail\n- Add signInWithMagicLink method using Supabase signInWithOtp\n- Update Auth page with multiple modes \\(sign-in, sign-up, magic-link, forgot-password\\)\n- Add \"Forgot password?\" link and \"Sign in with Magic Link\" button\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix timezone bug and pre-fill check-in form with previous values\n\n- Fix date parsing to use local timezone instead of UTC\n- Add getLastCheckIn to useCheckIns hook\n- Pre-fill check-in form with last check-in values when starting fresh\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }
