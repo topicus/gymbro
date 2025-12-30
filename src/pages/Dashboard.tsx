@@ -102,24 +102,20 @@ export function Dashboard({
           </Card>
         )}
 
-        {/* Check-in CTA */}
-        <Card className={hasCheckedInToday ? 'bg-primary-500/10 border-primary-500/20' : ''}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="font-semibold text-white">
-                {hasCheckedInToday ? 'Checked in today' : 'Daily Check-in'}
-              </h3>
-              <p className="text-sm text-gray-400">
-                {hasCheckedInToday ? 'Great job! Come back tomorrow.' : 'Track your progress'}
-              </p>
+        {/* Check-in CTA - only show if not checked in today */}
+        {!hasCheckedInToday && (
+          <Card>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-white">Daily Check-in</h3>
+                <p className="text-sm text-gray-400">Track your progress</p>
+              </div>
+              <Link to="/check-in">
+                <Button>Check In</Button>
+              </Link>
             </div>
-            <Link to="/check-in">
-              <Button variant={hasCheckedInToday ? 'secondary' : 'primary'}>
-                {hasCheckedInToday ? 'Update' : 'Check In'}
-              </Button>
-            </Link>
-          </div>
-        </Card>
+          </Card>
+        )}
 
         {/* Recent Check-ins */}
         {recentCheckIns.length > 0 && (
@@ -129,27 +125,36 @@ export function Dashboard({
             </h3>
             <Card padding="none">
               <div className="divide-y divide-white/5">
-                {recentCheckIns.slice(0, 5).map((checkIn) => (
-                  <div key={checkIn.id} className="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
-                    <div>
-                      <p className="text-sm font-medium text-gray-200">
-                        {new Date(checkIn.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                      </p>
-                      <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
-                        <span>{checkIn.weight}kg</span>
-                        <span>Energy: {checkIn.energy}/5</span>
-                        {checkIn.movement_done && <span className="text-primary-400">Moved</span>}
+                {recentCheckIns.slice(0, 5).map((checkIn) => {
+                  const isToday = checkIn.date === new Date().toISOString().split('T')[0]
+                  return (
+                    <div key={checkIn.id} className="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+                      <div>
+                        <p className="text-sm font-medium text-gray-200">
+                          {new Date(checkIn.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                          {isToday && <span className="ml-2 text-xs text-primary-400">(Today)</span>}
+                        </p>
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                          <span>{checkIn.weight}kg</span>
+                          <span>Energy: {checkIn.energy}/5</span>
+                          {checkIn.movement_done && <span className="text-primary-400">Moved</span>}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {checkIn.alcohol_intake !== 'none' && (
+                          <span className="text-xs px-2 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded">
+                            {checkIn.alcohol_intake}
+                          </span>
+                        )}
+                        {isToday && (
+                          <Link to="/check-in">
+                            <Button variant="ghost" size="sm">Edit</Button>
+                          </Link>
+                        )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {checkIn.alcohol_intake !== 'none' && (
-                        <span className="text-xs px-2 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded">
-                          {checkIn.alcohol_intake}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </Card>
           </div>
