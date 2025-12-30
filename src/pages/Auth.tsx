@@ -65,16 +65,16 @@ export function Auth({ onSignIn, onSignUp, onResetPassword, onMagicLink, isMockM
   const needsPassword = mode === 'sign-in' || mode === 'sign-up'
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Gymbro</h1>
-          <p className="text-gray-600 mt-2">Your personal performance coach</p>
+          <h1 className="text-4xl font-bold text-white text-glow">Gymbro</h1>
+          <p className="text-gray-400 mt-2">Your personal performance coach</p>
         </div>
 
         {isMockMode && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-sm text-yellow-800">
+          <div className="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
+            <p className="text-sm text-primary-400">
               Running in demo mode. No Supabase connection.
             </p>
           </div>
@@ -104,11 +104,11 @@ export function Auth({ onSignIn, onSignUp, onResetPassword, onMagicLink, isMockM
             )}
 
             {error && (
-              <p className="text-sm text-red-600">{error}</p>
+              <p className="text-sm text-red-400 text-center">{error}</p>
             )}
 
             {success && (
-              <p className="text-sm text-green-600">{success}</p>
+              <p className="text-sm text-primary-400 text-center">{success}</p>
             )}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
@@ -123,18 +123,18 @@ export function Auth({ onSignIn, onSignUp, onResetPassword, onMagicLink, isMockM
               <button
                 type="button"
                 onClick={() => switchMode('forgot-password')}
-                className="w-full text-sm text-gray-500 hover:text-gray-700"
+                className="w-full text-sm text-gray-500 hover:text-white transition-colors"
               >
                 Forgot password?
               </button>
             )}
 
-            <div className="relative my-4">
+            <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200" />
+                <div className="w-full border-t border-white/10" />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-gray-500">or</span>
+              <div className="relative flex justify-center text-xs uppercase tracking-widest">
+                <span className="bg-dark-950 px-4 text-gray-500">or</span>
               </div>
             </div>
 
@@ -149,22 +149,22 @@ export function Auth({ onSignIn, onSignUp, onResetPassword, onMagicLink, isMockM
               </Button>
             )}
 
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-gray-500">
               {mode === 'sign-up' ? (
                 <>
                   Already have an account?{' '}
-                  <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-600 hover:underline font-medium">
+                  <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-500 hover:text-primary-400 font-semibold transition-colors">
                     Sign In
                   </button>
                 </>
               ) : mode === 'magic-link' || mode === 'forgot-password' ? (
-                <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-600 hover:underline font-medium">
+                <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-500 hover:text-primary-400 font-semibold transition-colors">
                   Back to Sign In
                 </button>
               ) : (
                 <>
                   Don't have an account?{' '}
-                  <button type="button" onClick={() => switchMode('sign-up')} className="text-primary-600 hover:underline font-medium">
+                  <button type="button" onClick={() => switchMode('sign-up')} className="text-primary-500 hover:text-primary-400 font-semibold transition-colors">
                     Sign Up
                   </button>
                 </>
