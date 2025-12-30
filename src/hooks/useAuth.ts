@@ -101,6 +101,24 @@ export function useAuth() {
     return { error }
   }
 
+  const signInWithGoogle = async () => {
+    if (isMockMode) {
+      setAuth({
+        user: { id: 'mock-user-id', email: 'demo@gymbro.app' },
+        loading: false,
+      })
+      return { error: null }
+    }
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    })
+    return { error }
+  }
+
   return {
     user: auth.user,
     loading: auth.loading,
@@ -109,6 +127,7 @@ export function useAuth() {
     signOut,
     resetPassword,
     signInWithMagicLink,
+    signInWithGoogle,
     isMockMode,
   }
 }

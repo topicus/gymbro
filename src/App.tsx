@@ -11,7 +11,7 @@ import { CheckIn } from '@/pages/CheckIn'
 import { AiChat } from '@/components/AiChat'
 
 function AppContent() {
-  const { user, loading: authLoading, signIn, signUp, signOut, resetPassword, signInWithMagicLink, isMockMode } = useAuth()
+  const { user, loading: authLoading, signIn, signUp, signOut, resetPassword, signInWithMagicLink, signInWithGoogle, isMockMode } = useAuth()
   const { profile, loading: profileLoading, saveProfile, hasProfile } = useProfile(user?.id)
   const {
     chapters,
@@ -46,7 +46,7 @@ function AppContent() {
 
   // Not authenticated
   if (!user) {
-    return <Auth onSignIn={signIn} onSignUp={signUp} onResetPassword={resetPassword} onMagicLink={signInWithMagicLink} isMockMode={isMockMode} />
+    return <Auth onSignIn={signIn} onSignUp={signUp} onResetPassword={resetPassword} onMagicLink={signInWithMagicLink} onGoogle={signInWithGoogle} isMockMode={isMockMode} />
   }
 
   // No profile yet - onboarding
