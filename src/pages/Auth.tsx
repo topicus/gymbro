@@ -12,11 +12,13 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+    setSuccess(null)
     setIsLoading(true)
 
     const action = isSignUp ? onSignUp : onSignIn
@@ -24,6 +26,8 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
 
     if (authError) {
       setError(authError.message)
+    } else if (isSignUp) {
+      setSuccess('Check your email for a confirmation link.')
     }
     setIsLoading(false)
   }
@@ -69,6 +73,10 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
               <p className="text-sm text-red-600">{error}</p>
             )}
 
+            {success && (
+              <p className="text-sm text-green-600">{success}</p>
+            )}
+
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Loading...' : isSignUp ? 'Create Account' : 'Sign In'}
             </Button>
@@ -80,6 +88,7 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
                 onClick={() => {
                   setIsSignUp(!isSignUp)
                   setError(null)
+                  setSuccess(null)
                 }}
                 className="text-primary-600 hover:underline font-medium"
               >
