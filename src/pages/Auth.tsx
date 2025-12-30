@@ -1,19 +1,29 @@
 import { useState } from 'react'
 import { Card, Button, Input } from '@/components/ui'
 
+type AuthMode = 'sign-in' | 'sign-up' | 'magic-link' | 'forgot-password'
+
 interface AuthProps {
   onSignIn: (email: string, password: string) => Promise<{ error: { message: string } | null }>
   onSignUp: (email: string, password: string) => Promise<{ error: { message: string } | null }>
+  onResetPassword: (email: string) => Promise<{ error: { message: string } | null }>
+  onMagicLink: (email: string) => Promise<{ error: { message: string } | null }>
   isMockMode: boolean
 }
 
-export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
-  const [isSignUp, setIsSignUp] = useState(false)
+export function Auth({ onSignIn, onSignUp, onResetPassword, onMagicLink, isMockMode }: AuthProps) {
+  const [mode, setMode] = useState<AuthMode>('sign-in')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  const switchMode = (newMode: AuthMode) => {
+    setMode(newMode)
+    setError(null)
+    setSuccess(null)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,16 +31,38 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
     setSuccess(null)
     setIsLoading(true)
 
-    const action = isSignUp ? onSignUp : onSignIn
-    const { error: authError } = await action(email, password)
+    let result: { error: { message: string } | null }
 
-    if (authError) {
-      setError(authError.message)
-    } else if (isSignUp) {
-      setSuccess('Check your email for a confirmation link.')
+    switch (mode) {
+      case 'sign-up':
+        result = await onSignUp(email, password)
+        if (!result.error) {
+          setSuccess('Check your email for a confirmation link.')
+        }
+        break
+      case 'magic-link':
+        result = await onMagicLink(email)
+        if (!result.error) {
+          setSuccess('Check your email for a sign-in link.')
+        }
+        break
+      case 'forgot-password':
+        result = await onResetPassword(email)
+        if (!result.error) {
+          setSuccess('Check your email for a password reset link.')
+        }
+        break
+      default:
+        result = await onSignIn(email, password)
+    }
+
+    if (result.error) {
+      setError(result.error.message)
     }
     setIsLoading(false)
   }
+
+  const needsPassword = mode === 'sign-in' || mode === 'sign-up'
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -59,15 +91,17 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
               required
             />
 
-            <Input
-              type="password"
-              label="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              minLength={6}
-              required
-            />
+            {needsPassword && (
+              <Input
+                type="password"
+                label="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                minLength={6}
+                required
+              />
+            )}
 
             {error && (
               <p className="text-sm text-red-600">{error}</p>
@@ -78,22 +112,63 @@ export function Auth({ onSignIn, onSignUp, isMockMode }: AuthProps) {
             )}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Loading...' : isSignUp ? 'Create Account' : 'Sign In'}
+              {isLoading ? 'Loading...' :
+                mode === 'sign-up' ? 'Create Account' :
+                mode === 'magic-link' ? 'Send Magic Link' :
+                mode === 'forgot-password' ? 'Send Reset Link' :
+                'Sign In'}
             </Button>
 
-            <p className="text-center text-sm text-gray-600">
-              {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+            {mode === 'sign-in' && (
               <button
                 type="button"
-                onClick={() => {
-                  setIsSignUp(!isSignUp)
-                  setError(null)
-                  setSuccess(null)
-                }}
-                className="text-primary-600 hover:underline font-medium"
+                onClick={() => switchMode('forgot-password')}
+                className="w-full text-sm text-gray-500 hover:text-gray-700"
               >
-                {isSignUp ? 'Sign In' : 'Sign Up'}
+                Forgot password?
               </button>
+            )}
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-2 text-gray-500">or</span>
+              </div>
+            </div>
+
+            {mode !== 'magic-link' && (
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full"
+                onClick={() => switchMode('magic-link')}
+              >
+                Sign in with Magic Link
+              </Button>
+            )}
+
+            <p className="text-center text-sm text-gray-600">
+              {mode === 'sign-up' ? (
+                <>
+                  Already have an account?{' '}
+                  <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-600 hover:underline font-medium">
+                    Sign In
+                  </button>
+                </>
+              ) : mode === 'magic-link' || mode === 'forgot-password' ? (
+                <button type="button" onClick={() => switchMode('sign-in')} className="text-primary-600 hover:underline font-medium">
+                  Back to Sign In
+                </button>
+              ) : (
+                <>
+                  Don't have an account?{' '}
+                  <button type="button" onClick={() => switchMode('sign-up')} className="text-primary-600 hover:underline font-medium">
+                    Sign Up
+                  </button>
+                </>
+              )}
             </p>
           </form>
         </Card>

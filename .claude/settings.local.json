@@ -5,7 +5,9 @@
       "Bash(npx create-vite@latest . --template react-ts)",
       "Bash(npm install:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd password reset and magic link login\n\n- Add resetPassword method using Supabase resetPasswordForEmail\n- Add signInWithMagicLink method using Supabase signInWithOtp\n- Update Auth page with multiple modes \\(sign-in, sign-up, magic-link, forgot-password\\)\n- Add \"Forgot password?\" link and \"Sign in with Magic Link\" button\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

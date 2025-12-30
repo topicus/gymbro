@@ -72,12 +72,43 @@ export function useAuth() {
     await supabase.auth.signOut()
   }
 
+  const resetPassword = async (email: string) => {
+    if (isMockMode) {
+      return { error: null }
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    })
+    return { error }
+  }
+
+  const signInWithMagicLink = async (email: string) => {
+    if (isMockMode) {
+      setAuth({
+        user: { id: 'mock-user-id', email },
+        loading: false,
+      })
+      return { error: null }
+    }
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    })
+    return { error }
+  }
+
   return {
     user: auth.user,
     loading: auth.loading,
     signIn,
     signUp,
     signOut,
+    resetPassword,
+    signInWithMagicLink,
     isMockMode,
   }
 }
