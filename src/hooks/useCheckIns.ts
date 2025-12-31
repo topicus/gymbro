@@ -3,6 +3,12 @@ import { supabase, isMockMode } from '@/lib/supabase'
 import { mockStore } from '@/lib/mockData'
 import type { DailyCheckIn, CheckInFormData } from '@/types'
 
+// Get local date as YYYY-MM-DD string
+const getLocalDateString = () => {
+  const now = new Date()
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+}
+
 export function useCheckIns(userId: string | undefined) {
   const [checkIns, setCheckIns] = useState<DailyCheckIn[]>([])
   const [loading, setLoading] = useState(true)
@@ -46,7 +52,7 @@ export function useCheckIns(userId: string | undefined) {
   const addCheckIn = async (data: CheckInFormData): Promise<{ error: string | null; xpGained: number }> => {
     if (!userId) return { error: 'No user ID', xpGained: 0 }
 
-    const today = new Date().toISOString().split('T')[0]
+    const today = getLocalDateString()
     const checkInData = {
       ...data,
       date: today,
@@ -96,7 +102,7 @@ export function useCheckIns(userId: string | undefined) {
   }
 
   const getTodayCheckIn = (): DailyCheckIn | null => {
-    const today = new Date().toISOString().split('T')[0]
+    const today = getLocalDateString()
     return checkIns.find(c => c.date === today) || null
   }
 

@@ -126,7 +126,9 @@ export function Dashboard({
             <Card padding="none">
               <div className="divide-y divide-white/5">
                 {recentCheckIns.slice(0, 5).map((checkIn) => {
-                  const isToday = checkIn.date === new Date().toISOString().split('T')[0]
+                  const now = new Date()
+                  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+                  const isToday = checkIn.date === todayStr
                   return (
                     <div key={checkIn.id} className="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
                       <div>
