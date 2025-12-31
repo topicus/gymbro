@@ -12,7 +12,7 @@ import { AiChat } from '@/components/AiChat'
 
 function AppContent() {
   const { user, loading: authLoading, signIn, signUp, signOut, resetPassword, signInWithMagicLink, signInWithGoogle, isMockMode } = useAuth()
-  const { profile, loading: profileLoading, saveProfile, hasProfile } = useProfile(user?.id)
+  const { profile, loading: profileLoading, saveProfile, updateXpAndStreak, hasProfile } = useProfile(user?.id)
   const {
     chapters,
     activeChapter,
@@ -63,6 +63,15 @@ function AppContent() {
 
   const chapterProgress = activeChapter ? getChapterProgress(activeChapter) : 0
 
+  const handleCheckIn = async (data: Parameters<typeof addCheckIn>[0]) => {
+    const isNewCheckIn = !hasCheckedInToday()
+    const result = await addCheckIn(data)
+    if (!result.error && isNewCheckIn) {
+      await updateXpAndStreak(result.xpGained, 1)
+    }
+    return result
+  }
+
   return (
     <>
       <Routes>
@@ -109,7 +118,7 @@ function AppContent() {
             <CheckIn
               todayCheckIn={getTodayCheckIn()}
               lastCheckIn={getLastCheckIn()}
-              onSubmit={addCheckIn}
+              onSubmit={handleCheckIn}
             />
           }
         />
